@@ -10,6 +10,8 @@ function start() {
     preventFormSubmit();
     activateInput();
 
+    render();
+
 }
 
 function preventFormSubmit() {
@@ -22,5 +24,37 @@ function preventFormSubmit() {
 }
 
 function activateInput() {
+
+    function insertName(newName) {
+        globalNames.push(newName)
+        console.log(globalNames)
+        render();
+    }
+
+    function handleTyping(event) {
+        if (event.key === 'Enter') {
+            let typedName = event.target.value
+            insertName(typedName)
+        }
+    }
+
+    inputName.addEventListener('keyup', handleTyping);
     inputName.focus();
+}
+
+function render() {
+    let divNames = document.querySelector("#names")
+
+    let ul = document.createElement('ul')
+
+    for (let i = 0; i < globalNames.length; i++) {
+        let currentName = globalNames[i]
+
+        let li = document.createElement('li')
+        li.textContent = currentName
+
+        ul.appendChild(li)
+    }
+
+    divNames.appendChild(ul)
 }
