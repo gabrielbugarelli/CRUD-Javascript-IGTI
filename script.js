@@ -43,7 +43,25 @@ function activateInput() {
 }
 
 function render() {
+
+    function createDeleteButton(index) {
+
+        function deleteName() {
+            globalNames.splice(index, 1)
+            render()
+        }
+
+        let button = document.createElement('button')
+        button.classList.add('deleteButton')
+        button.textContent = 'x'
+
+        button.addEventListener('click', deleteName)
+
+        return button;
+    }
+
     let divNames = document.querySelector("#names")
+    divNames.innerHTML = ''
 
     let ul = document.createElement('ul')
 
@@ -51,10 +69,21 @@ function render() {
         let currentName = globalNames[i]
 
         let li = document.createElement('li')
-        li.textContent = currentName
+        let button = createDeleteButton(i)
 
+        let span = document.createElement('span')
+        span.textContent = currentName
+
+        li.appendChild(button)
+        li.appendChild(span)
         ul.appendChild(li)
     }
 
     divNames.appendChild(ul)
+    clearInput()
+}
+
+function clearInput() {
+    inputName.value = ''
+    inputName.focus()
 }
